@@ -39,6 +39,4 @@ This plugin only provides the REPL-like functionality within the editor. For fil
 
 ## Bugs/caveats
 
-Due to Neovim's [bug](https://github.com/neovim/neovim/issues/16500), the last line of the buffer is problematic. The plugin works around this by moving the last line to the center of the window when that is evaluated. However, it is possible to navigate the editor so that the last line of the buffer has an evaluation result below it and the last line of the buffer is on the last line of the window. In this case, due to the bug, the line is not rendered properly.
-
 Reading an evaluation result that spans below the bottom of the window can be tricky. The Vim scrolling movements `<C-E>` and `<C-Y>` are helpful in such situation.

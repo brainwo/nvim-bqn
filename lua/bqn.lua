@@ -89,10 +89,13 @@ function evalBQN(from, to, explain)
           if message ~= line then
             error = {message=message}
           end
-        end
-        if error ~= nil and lnum == 2 and not explain then
-          local lnum = line:gsub("^%(%-p%):(%d+):", "%1")
-          error.lnum = tonumber(lnum) + from - 1
+        elseif error ~= nil and not explain then
+          -- Check if this line has the line number of the error
+          -- The error for the current file looks like: (-p):linenumber:
+          local lnum, count = line:gsub("^%(%-p%):(%d+):", "%1")
+          if count ~= 0 then
+            error.lnum = tonumber(lnum) + from - 1
+          end
         end
         local hl = 'bqnoutok'
         if error ~= nil then hl = 'bqnouterr' end

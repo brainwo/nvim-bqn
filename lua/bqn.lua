@@ -99,7 +99,12 @@ function evalBQN(from, to, explain)
         end
         local hl = 'bqnoutok'
         if error ~= nil then hl = 'bqnouterr' end
-        table.insert(lines, {{' ' .. line, hl}})
+
+        -- Substitute (-p) with the path of the current buffer
+        local local_path_subst_pat = vim.api.nvim_buf_get_name(0) .. ":%1"
+        local line_with_current_buf = line:gsub("^%(%-p%):(%d+):", local_path_subst_pat)
+
+        table.insert(lines, {{' ' .. line_with_current_buf, hl}})
     end
     table.insert(lines, {{' ', 'bqnoutok'}})
 
